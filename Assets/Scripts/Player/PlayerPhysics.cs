@@ -15,6 +15,7 @@ namespace Player
             if (!canMove)
             {
                 var moveDirectionX = new Vector3(moveDirection.x, 0, 0).normalized;
+                //Change move direction only if we are moving in selected axis
                 if(moveDirectionX.x!=0 && !CheckCollision(moveDirectionX, moveDistance))
                 {
                     canMove = true;

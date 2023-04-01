@@ -9,6 +9,7 @@ namespace Player
 
         [SerializeField] private float moveSpeed = 7f;
         [SerializeField] private float rotateSpeed = 10f;
+        
 
         private bool _isWalking;
         private PlayerPhysics _playerPhysics;
@@ -21,9 +22,13 @@ namespace Player
 
         private void Update()
         {
-            var inputVector = gameInput.GetMovementVectorNormalized();
+            HandleMovement();
+        }
 
-            var moveDirection = new Vector3(inputVector.x, 0f, inputVector.y);
+        private void HandleMovement()
+        {
+            var moveDirection = GetMoveDirection();
+            
             var moveDistance = moveSpeed * Time.deltaTime;
             
             if (_playerPhysics.IsColliding(ref moveDirection,moveDistance))
@@ -36,11 +41,18 @@ namespace Player
             transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
         }
 
+        
+        
         public bool IsWalking()
         {
             return _isWalking;
         }
 
+        public Vector3 GetMoveDirection()
+        {
+            var inputVector = gameInput.GetMovementVectorNormalized();
+            return new Vector3(inputVector.x, 0f, inputVector.y);
+        }
         
     }
 }

@@ -1,16 +1,20 @@
 using System;
 using Counter;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
-    public class PlayerInteractions : MonoBehaviour
+    public class PlayerInteractions : MonoBehaviour, IKitchenObjectParent
     {
         public static PlayerInteractions Instance { get;private set; }
         
         [SerializeField] private LayerMask countersLayerMask;
         [SerializeField] private GameInput gameInput;
         [SerializeField] private float interactDistance = 2f;
+        [SerializeField]private Transform kitchenObjectHoldPoint;
+        
+        private KitchenObject _kitchenObject;
 
         public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
         
@@ -42,7 +46,7 @@ namespace Player
         {
             if (_selectedCounter != null)
             {
-                _selectedCounter.Interact();
+                _selectedCounter.Interact(this);
             }
         }
 
@@ -86,6 +90,31 @@ namespace Player
             {
                 SelectedCounter =_selectedCounter
             });
+        }
+
+        public Transform GetKitchenObjectFollowTransform()
+        {
+            return kitchenObjectHoldPoint;
+        }
+
+        public void SetKitchenObject(KitchenObject kitchenObject)
+        {
+            _kitchenObject = kitchenObject;
+        }
+
+        public KitchenObject GetKitchenObject()
+        {
+            return _kitchenObject;
+        }
+
+        public void ClearKitchenObject()
+        {
+            _kitchenObject = null;
+        }
+
+        public bool HasKitchenObject()
+        {
+            return _kitchenObject != null;
         }
     }
 }

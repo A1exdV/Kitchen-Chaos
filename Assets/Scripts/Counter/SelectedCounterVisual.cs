@@ -15,8 +15,6 @@ namespace Counter
 
         private void PlayerInteractions_OnSelectedCounterChanged(object sender, PlayerInteractions.OnSelectedCounterChangedEventArgs e)
         {
-            if(visualGameObject==null)
-                return;
             if (e.SelectedCounter == clearCounter)
             {
                 Show();

@@ -10,12 +10,15 @@ namespace Counters
         public event EventHandler OnPlayerGrabbedObject;
         [SerializeField]private KitchenObjectSO kitchenObjectSO;
 
-        public override void Interact(PlayerInteractions playerInteractions)
+        public override void Interact(PlayerInteractions player)
         {
-            var kitchenObjectTransform = Instantiate(kitchenObjectSO.prefab);
-            kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenCounterParent(playerInteractions);
-            
-            OnPlayerGrabbedObject?.Invoke(this,EventArgs.Empty);
+            if (!player.HasKitchenObject())
+            {
+                var kitchenObjectTransform = Instantiate(kitchenObjectSO.prefab);
+                kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenCounterParent(player);
+
+                OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty);
+            }
         }
 
     }

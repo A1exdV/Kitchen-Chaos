@@ -11,24 +11,24 @@ namespace Counters
         public override void Interact(PlayerInteractions player)
         {
             if (!HasKitchenObject())
-            {
+            {   //There is no KitchenObjects here
                 if (player.HasKitchenObject())
-                {
+                {   //Player is carrying something
                     player.GetKitchenObject().SetKitchenCounterParent(this);
                 }
                 else
-                {
+                {  //Player not carrying anything
                     
                 }
             }
             else
-            {
+            { ////There is KitchenObjects here
                 if (player.HasKitchenObject())
-                {
+                { //Player is carrying something
                     
                 }
                 else
-                {
+                { //Player not carrying anything
                     GetKitchenObject().SetKitchenCounterParent(player);
                 }
             }

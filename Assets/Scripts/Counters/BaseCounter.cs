@@ -14,6 +14,11 @@ namespace Counters
             Debug.LogError("BaseCounter.Interact();");
         }
         
+        public virtual void InteractAlternate(PlayerInteractions player)
+        {
+            Debug.LogError("BaseCounter.InteractAlternate();");
+        }
+        
         public Transform GetKitchenObjectFollowTransform()
         {
             return counterTopPoint;

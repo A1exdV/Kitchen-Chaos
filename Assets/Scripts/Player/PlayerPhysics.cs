@@ -10,7 +10,7 @@ namespace Player
         //Check collision and change move direction 
         public bool IsColliding(ref Vector3 moveDirection, float moveDistance)
         {
-            var canMove = !CheckCollision( moveDirection, moveDistance);
+            var canMove =!CheckCollision( moveDirection, moveDistance);
 
             if (!canMove)
             {

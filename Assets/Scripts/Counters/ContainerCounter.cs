@@ -14,8 +14,7 @@ namespace Counters
         {
             if (!player.HasKitchenObject())
             {
-                var kitchenObjectTransform = Instantiate(kitchenObjectSO.prefab);
-                kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenCounterParent(player);
+                KitchenObject.SpawnKitchenObject(kitchenObjectSO, player);
 
                 OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty);
             }

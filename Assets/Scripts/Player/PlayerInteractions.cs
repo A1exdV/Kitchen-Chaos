@@ -1,5 +1,6 @@
 using System;
 using Counter;
+using Counters;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,12 +21,12 @@ namespace Player
         
         public class OnSelectedCounterChangedEventArgs: EventArgs
         {
-            public ClearCounter SelectedCounter;
+            public BaseCounter SelectedCounter;
         }
         
         private Vector3 _lastInteractDirection;
         private PlayerMovement _playerMovement;
-        private ClearCounter _selectedCounter;
+        private BaseCounter _selectedCounter;
 
         private void Awake()
         {
@@ -66,10 +67,10 @@ namespace Player
             
             if (Physics.Raycast(transform.position, _lastInteractDirection, out RaycastHit raycastHit, interactDistance,countersLayerMask))
             {
-                if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+                if (raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
                 {
-                    if (clearCounter != _selectedCounter)
-                        SetSelectedCounter(clearCounter);
+                    if (baseCounter != _selectedCounter)
+                        SetSelectedCounter(baseCounter);
                 }
                 else if(_selectedCounter!=null)
                 {
@@ -82,7 +83,7 @@ namespace Player
             }
         }
 
-        private void SetSelectedCounter(ClearCounter selectedCounter)
+        private void SetSelectedCounter(BaseCounter selectedCounter)
         {
             _selectedCounter = selectedCounter;
             

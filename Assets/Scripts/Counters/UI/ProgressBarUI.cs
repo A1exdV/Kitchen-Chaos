@@ -5,21 +5,28 @@ namespace Counters.UI
 {
     public class ProgressBarUI : MonoBehaviour
     {
-        [SerializeField] private CuttingCounter cuttingCounter;
+        [SerializeField] private GameObject hasProgressGameObject;
         [SerializeField] private Image barImage;
+
+        private IHasProgress _hasProgress;
 
         private void Start()
         {
-            cuttingCounter.OnProgressChanged +=CuttingCounter_OnProgressChanged;
+            _hasProgress = hasProgressGameObject.GetComponent<IHasProgress>();
+            if (_hasProgress == null)
+            {
+                Debug.LogError($"Game Object {hasProgressGameObject.name} dont have IHasProgress!");
+            }
+            _hasProgress.OnProgressChanged +=HasProgress_ProgressChanged;
             barImage.fillAmount = 0f;
             Hide();
         }
 
-        private void CuttingCounter_OnProgressChanged(object sender, CuttingCounter.OnProgressChangedArgs e)
+        private void HasProgress_ProgressChanged(object sender, IHasProgress.OnProgressChangedArgs e)
         {
-            barImage.fillAmount = e.progressNormalized;
+            barImage.fillAmount = e.ProgressNormalized;
 
-            if (e.progressNormalized == 0f || e.progressNormalized == 1f)
+            if (e.ProgressNormalized == 0f || e.ProgressNormalized == 1f)
             {
                 Hide();
             }

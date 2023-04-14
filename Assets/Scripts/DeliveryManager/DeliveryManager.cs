@@ -24,6 +24,8 @@ public class DeliveryManager : MonoBehaviour
     private float _spawnRecipeTimerMax = 8f;
     private int _waitingRecipesMax = 6;
 
+    private int _successfulRecipesAmount;
+
     private void Awake()
     {
         _waitingRecipeList = new List<RecipeSO>();
@@ -90,7 +92,7 @@ public class DeliveryManager : MonoBehaviour
                 if (plateContentsMatchesRecipe)
                 {
                     //Player delivered the correct plate!
-
+                    _successfulRecipesAmount++;
                     _waitingRecipeList.RemoveAt(i);
                     print("done!");
                     OnRecipeCompleted?.Invoke(this,EventArgs.Empty);
@@ -107,5 +109,10 @@ public class DeliveryManager : MonoBehaviour
     public List<RecipeSO> GetWaitingRecepieSOList()
     {
         return _waitingRecipeList;
+    }
+
+    public int GetSuccessfulRecipesAmount()
+    {
+        return _successfulRecipesAmount;
     }
 }

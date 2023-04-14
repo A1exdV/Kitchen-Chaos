@@ -1,8 +1,7 @@
 using System;
-using Counter;
 using Counters;
 using UnityEngine;
-using UnityEngine.Serialization;
+
 
 namespace Player
 {
@@ -17,6 +16,7 @@ namespace Player
         
         private KitchenObject _kitchenObject;
 
+        public event EventHandler OnPickedSomething;
         public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
         
         public class OnSelectedCounterChangedEventArgs: EventArgs
@@ -110,6 +110,11 @@ namespace Player
         public void SetKitchenObject(KitchenObject kitchenObject)
         {
             _kitchenObject = kitchenObject;
+
+            if (kitchenObject != null)
+            {
+                OnPickedSomething?.Invoke(this,EventArgs.Empty);
+            }
         }
 
         public KitchenObject GetKitchenObject()

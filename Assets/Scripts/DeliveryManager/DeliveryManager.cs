@@ -10,6 +10,9 @@ public class DeliveryManager : MonoBehaviour
     public event EventHandler OnRecipeSpawned;
     public event EventHandler OnRecipeCompleted;
 
+    public static event EventHandler OnRecipeSuccess;
+    public static event EventHandler OnRecipeFailed;
+
     [SerializeField] private RecipeListSO recipeListSO;
 
     public static DeliveryManager Instance { get; private set; }
@@ -45,7 +48,7 @@ public class DeliveryManager : MonoBehaviour
         }
     }
 
-    public void DeliverRecipe(PlateKitchenObject plateKitchenObject)
+    public void DeliverRecipe(PlateKitchenObject plateKitchenObject, GameObject sender)
     {
         for (var i = 0; i < _waitingRecipeList.Count; i++)
         {
@@ -91,11 +94,14 @@ public class DeliveryManager : MonoBehaviour
                     _waitingRecipeList.RemoveAt(i);
                     print("done!");
                     OnRecipeCompleted?.Invoke(this,EventArgs.Empty);
+                    OnRecipeSuccess?.Invoke(sender, EventArgs.Empty);
                     return;
                 }
             }
         }
         //No matches found!
+        OnRecipeFailed?.Invoke(sender, EventArgs.Empty);
+        
     }
 
     public List<RecipeSO> GetWaitingRecepieSOList()

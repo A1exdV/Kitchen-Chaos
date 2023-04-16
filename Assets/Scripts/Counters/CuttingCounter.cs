@@ -17,6 +17,11 @@ namespace Counters
 
         private int _cuttingProgress;
 
+        new public static void ResetStaticData()
+        {
+            OnAnyCut = null;
+        }
+
         public override void Interact(PlayerInteractions player)
         {
             if (!HasKitchenObject())

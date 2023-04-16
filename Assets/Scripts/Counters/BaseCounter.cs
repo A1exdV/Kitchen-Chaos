@@ -11,6 +11,10 @@ namespace Counters
         
         private KitchenObject _kitchenObject;
         
+        public static void ResetStaticData()
+        {
+            OnAnyObjectPlacedHere = null;
+        }
         public virtual void Interact(PlayerInteractions player)
         {
             Debug.LogError("BaseCounter.Interact();");
